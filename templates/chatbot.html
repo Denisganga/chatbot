@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+<style>
+    body, html {
+      height: 100%;
+    }
+
+
+    .messages-box {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .messages-list {
+      padding-left: 0;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      list-style: none;
+    }
+
+    .message-text {
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .sent {
+      background-color: #dcf8c6;
+      align-self: flex-end;
+    }
+
+    .received {
+      background-color: #f1f0f0;
+      align-self: flex-start;
+    }
+
+    .message-form {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #f8f9fa;
+    }
+
+    .message-input {
+      flex: 1;
+      border-radius: 0;
+      border-right: none;
+    }
+
+    .btn-send {
+      border-radius: 0;
+    }
+
+    .chat-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Your existing styles */
+    
+    /* Sidebar Styles */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 20px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+    }
+    .sidebar p {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 20px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+    }
+    
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+    
+    .sidebar .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    .open-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 999;
+    }
+  </style>
+{% endblock %}
+
+
+{% block content %}
+<div class="chat-container">
+  <!-- Button to open the sidebar -->
+  <button class="open-btn" onclick="openNav()">☰</button>
+  
+  <!-- The sidebar -->
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">×</a>
+    <p><i class='bx bxs-user-detail'></i> Counsellor details</p>
+    <div class="card-header bg-primary text-white text-center"> <b>Counsellor  {{user.username}} <br>email- {{user.email}}</b>
+      
+
+   <!-- <a href="#">Sidebar Item 3</a>-->
+        {% if user.is_authenticated%}
+    <a style="color:yellow" href ="logout"> <i class='bx bx-log-out-circle'></i>  logout </a></div>
+    {% else %}
+    <div class="card-header bg-primary text-white text-right"><a style="color:yellow"href="login">Login</a>  <a style="color:yellow" href ="register">register</a></div>
+    {% endif %} 
+  </div>
+<div class="chat-container">
+  <div class="card flex-grow-1">
+    <div class="text">
+      <div class="welcome-message">
+        <div id="greeting" class="card-header bg-grey text-primary text-center">
+          <h3>Good Evening {{user.username}}, how can i help you with your mental health Today?</h3>
+        </div>
+      </div>
+      <script>
+        // JavaScript to dynamically change the greeting based on the time of day
+        var today = new Date();
+        var hour = today.getHours();
+    
+        var greeting = document.getElementById("greeting");
+    
+        if (hour >= 5 && hour < 12) {
+          greeting.innerHTML =
+            "<h3>Good Morning {{user.username}}, how can i help you with your mental health Today?</h3>";
+        } else if (hour >= 12 && hour < 18) {
+          greeting.innerHTML =
+            "<h3>Good Afternoon {{user.username}}, how can i help you with your mental health Today?</h3>";
+        } else {
+          greeting.innerHTML =
+            "<h3>Good Evening {{user.username}}, how can i help you with your mental health Today?</h3>";
+        }
+      </script>
+    </div>
+    
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+          <div class="card-header bg-grey  text-black text-center border border-dark">
+              You are stronger than you think
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="card-header bg-grey  text-black text-center border border-dark">
+              Embrace progress not perfection
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="card-header bg-grey text-black text-center border border-dark">
+              Your mental health matters
+          </div>
+      </div>
+  </div>
+  
+  
+
+    <!--{% if user.is_authenticated%}
+    <div class="card-header bg-primary text-white text-center"> <b>Welcome  back phychologist {{user.username}} to your mental health helper</b><a style="color:yellow" href ="logout">   logout </a></div>
+    {% else %}
+    <div class="card-header bg-primary text-white text-right"><a style="color:yellow"href="login">Login</a>  <a style="color:yellow" href ="register">register</a></div>
+    {% endif %} -->
+    <div class="card-body messages-box">
+      
+      <ul class="list-unstyled messages-list">
+        
+  <!--    <li class="message received">
+          <div class="message-text">
+            <div class="message-sender">
+              <b>Mental Health assistance</b>
+            </div>
+            <div class="message-content">
+              Hi, {{user.username}} I am a  Chatbot, you can ask me anything as i am here to help you.
+            </div>
+          </div>
+        </li> -->
+
+        {% for chat in chats %}
+        {% if chat.user == request.user %}
+
+
+     <li class="message sent">
+          <div class="message-text">
+            <div class="message-sender">
+              <b>psychologist {{user.username}} </b>
+            </div>
+            <div class="message-content">
+             {{chat.message}}
+            </div>
+          </div>
+     </li> 
+
+
+          <li class="message received">
+          <div class="message-text">
+            <div class="message-sender">
+              <b>Mental Health Assister</b>
+            </div>
+            <div class="message-content">
+              {{chat.response}}
+            </div>
+          </div>
+        </li> 
+
+
+        {% endif %}
+        {% endfor %}
+      </ul>
+      
+    </div>
+    <br><br>
+    <br><br>
+    <br><br>
+  </div>
+  <form class="message-form">
+    {%csrf_token%}
+    <div class="input-group">
+      <input type="text" class="form-control message-input" placeholder="Enter your message...">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-primary btn-send"><i class='bx bx-send'></i></button>
+
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+
+<script>
+  const messagesList = document.querySelector('.messages-list');
+  const messageForm = document.querySelector('.message-form');
+  const messageInput = document.querySelector('.message-input');
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (message.length === 0) {
+      return;
+    }
+
+    const messageItem = document.createElement('li');
+    messageItem.classList.add('message', 'sent');
+    messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+                <b>You</b>
+            </div>
+            <div class="message-content">
+                ${message}
+            </div>
+        </div>`;
+    messagesList.appendChild(messageItem);
+
+    messageInput.value = '';
+
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': message
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const response = data.response;
+        const messageItem = document.createElement('li');
+        messageItem.classList.add('message', 'received');
+        messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+              <b>AI Chatbot</b>
+            </div>
+            <div class="message-content">
+                ${response}
+            </div>
+        </div>
+          `;
+        messagesList.appendChild(messageItem);
+      });
+  });
+
+</script>
+<script>
+  function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+  }
+</script>
+
+{% endblock %}
