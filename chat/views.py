@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from .models import Chat
 from django.utils import timezone
 
-
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 
 def ask_openai(message):
@@ -58,31 +58,53 @@ def login(request):
             error_message = 'Invalid username or password'
             return render(request, 'login.html', {'error_message': error_message})
     else:
-        error_message = None  # Initialize error_message to None when rendering the login page
+        error_message = None 
         return render(request, 'login.html', {'error_message': error_message})
 
+
+
 def register(request):
-    if request.method=='POST':
-        username=request.POST['username']
-        email=request.POST['email']
-        password1=request.POST['password1']
-        password2=request.POST['password2']
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
 
-        if password1==password2:
-            try:
-                user=User.objects.create_user(username,email,password1)
-                user.save()
-                auth.login(request,user)
-                return redirect('chatbot')
-            except:
-                error_message='Error creating account'
-                return render(request, 'register.html', {'error_message':error_message})
+        if password1 == password2:
+            if not User.objects.filter(email=email).exists():
+                try:
+                    user = User.objects.create_user(username, email, password1)
+                    auth.login(request, user)
+                    return render(request, 'registration_success.html')  
+                except:
+                    error_message = 'Enter a valid email'
+            else:
+                error_message = 'Email already exists'
         else:
-            error_message = 'password dont match'
-            return render(request,'register.html', {'error_message':error_message})
+            error_message = 'Passwords do not match'
 
-    return render(request,'register.html')
+        return render(request, 'register.html', {'error_message': error_message})
+
+    return render(request, 'register.html')
+
 
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
+#password resetting
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'password_reset_form.html'
+    email_template_name = 'password_reset_email.html'
+    success_url = '/password_reset/done/'
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'password_reset_confirm.html'
+    success_url = '/password_reset/complete/'
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'password_reset_complete.html'
