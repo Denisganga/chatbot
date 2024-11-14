@@ -12,8 +12,6 @@ This is a Django-based system that allows users to upload admission documents, e
 
 ### 1. Clone the Repository
 
-```bash
-git clone https://github.com/yourusername/yourproject.git
-```
+
 
 cd yourproject
