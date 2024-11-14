@@ -1,0 +1,82 @@
+<!-- templates/agreement.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Usage Agreement</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            line-height: 1.6;
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .return-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .return-link:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Data Usage Agreement</h2>
+    <p>By submitting your documents through this platform, you consent to the collection and use of your personal data solely for admission purposes. Your information will not be shared with any third parties outside of the admission process, ensuring your privacy and confidentiality.</p>
+    <p>The data collected includes your personal identification details, academic qualifications, and other necessary documents required for the admissions process.</p>
+    <p>Our commitment is to protect and handle your data responsibly, in compliance with applicable privacy laws and regulations.</p>
+    <p>If you have any questions or concerns regarding the handling of your data, please contact our admissions office for further information.</p>
+    
+    <!--<a href="{% url 'admission_upload' %}" class="return-link">Return to Upload Documents</a> -->
+</div>
+
+</body>
+</html>

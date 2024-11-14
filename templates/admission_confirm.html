@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Admission Data</title>
+    <style>
+        /* Base reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Full-page container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            opacity: 0; /* Start as invisible */
+            animation: fadeInFromBottom 1s forwards; /* Fade-in effect */
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            opacity: 0; /* Start as invisible */
+            animation: fadeInFromBottom 1s 0.3s forwards; /* Delay for the table */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Button Styling */
+        .btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Header */
+        h2 {
+            color: #007bff;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            opacity: 0; /* Start as invisible */
+            animation: fadeInFromBottom 1s 0.1s forwards; /* Delay for the header */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+
+        /* Animation for fading in from bottom */
+        @keyframes fadeInFromBottom {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Confirm Your Admission Data</h2>
+
+    <!-- Data Table -->
+    <table>
+        <tr>
+            <th>Document</th>
+            <th>Details</th>
+        </tr>
+        <tr>
+            <td><strong>Result Slip:</strong></td>
+            <td>{{ extracted_data.result_slip }}</td>
+        </tr>
+        <tr>
+            <td><strong>Birth Certificate:</strong></td>
+            <td>{{ extracted_data.birth_certificate }}</td>
+        </tr>
+        <tr>
+            <td><strong>Admission Letter:</strong></td>
+            <td>{{ extracted_data.admission_letter }}</td>
+        </tr>
+        <tr>
+            <td><strong>Preferred Path:</strong></td>
+            <td>{{ extracted_data.preferred_path }}</td>
+        </tr>
+    </table>
+
+    <!-- Confirm Button -->
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn">Confirm</button>
+    </form>
+</div>
+
+</body>
+</html>

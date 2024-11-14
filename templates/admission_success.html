@@ -1,0 +1,171 @@
+<!-- admission_success.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Successful</title>
+    <style>
+        /* Base reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .success-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h3 {
+            font-size: 2.5rem;
+            color: #28a745;
+            margin-bottom: 20px;
+            animation: slideInFromTop 0.5s ease-in-out;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+            animation: slideInFromBottom 0.5s ease-in-out;
+        }
+
+        .checkmark {
+            font-size: 5rem;
+            color: #28a745;
+            margin-bottom: 20px;
+            animation: scaleUp 0.8s ease-in-out;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleUp {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .success-container {
+                padding: 30px;
+            }
+
+            h3 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .success-container {
+                padding: 20px;
+            }
+
+            h3 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="success-container">
+    <!-- Checkmark Icon -->
+    <div class="checkmark">&#10003;</div>
+
+    <h3>Admission Successful!</h3>
+    <p>Your admission details have been submitted successfully. You can now physically report to your insitution</p>
+
+    <!-- Button to go back or proceed -->
+    <a href="/home" class="btn">Go to Dashboard</a>
+</div>
+
+</body>
+</html>

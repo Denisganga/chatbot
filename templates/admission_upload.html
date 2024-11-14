@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Admission Documents</title>
+    <style>
+        /* Base reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Unified card for form and image */
+        .card {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            align-items: stretch;
+            margin-top: 40px;
+        }
+
+        .form-container {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        label {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="file"] {
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            width: 100%;
+            background-color: #f8f9fa;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"]:hover {
+            border-color: #007bff;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+            margin-top: 20px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn.enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .consent {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .consent input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .consent a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .image-container {
+            width: 48%;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+            }
+
+            .form-container, .image-container {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 10px;
+            }
+
+            input[type="file"] {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 12px;
+            }
+
+            .image-container img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+    <script>
+        function toggleSubmitButton() {
+            var checkbox = document.getElementById("consent-checkbox");
+            var submitButton = document.querySelector(".btn");
+            if (checkbox.checked) {
+                submitButton.classList.add("enabled");
+            } else {
+                submitButton.classList.remove("enabled");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Upload Admission Documents</h2>
+
+    <!-- Unified Card Container -->
+    <div class="card">
+        <!-- Form Section -->
+        <div class="form-container">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Display form fields here -->
+                <div class="form-group">
+                    <label for="{{ form.result_slip.id_for_label }}">Result Slip:</label>
+                    {{ form.result_slip }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.birth_certificate.id_for_label }}">Birth Certificate:</label>
+                    {{ form.birth_certificate }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.admission_letter.id_for_label }}">Admission Letter:</label>
+                    {{ form.admission_letter }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.preferred_path.id_for_label }}">Preferred Path:</label>
+                    {{ form.preferred_path }}
+                </div>
+
+                <!-- Consent Checkbox -->
+                <div class="consent">
+                    <input type="checkbox" id="consent-checkbox" onclick="toggleSubmitButton()">
+                    <label for="consent-checkbox">I agree that my data will be used solely for admission purposes and not shared with third parties.</label>
+                    <br>
+                    <a href="agreement" target="_blank">Read the full agreement</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn">Upload Documents</button>
+            </form>
+        </div>
+
+        <!-- Image Section -->
+        <div class="image-container">
+            <img src="{% static 'wee.png' %}" alt="Admission Image">
+        </div>
+    </div>
+
+</body>
+</html>
