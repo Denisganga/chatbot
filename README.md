@@ -34,7 +34,7 @@ python manage.py createsuperuser
 
 ```sh
 python manager.py runserver
-``
+```
 
 > [!NOTE]
 > You can then access the server from http://localhost:8000
