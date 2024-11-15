@@ -12,6 +12,29 @@ This is a Django-based system that allows users to upload admission documents, e
 
 ### 1. Clone the Repository
 
+```sh
+git clone https://github.com/Denisganga/chatbot.git
+cd chatbot
+```
 
+### 2. Setup Virual Environment
 
-cd yourproject
+```sh
+source source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 3. Create Superuser
+
+```sh
+python manage.py createsuperuser 
+```
+
+### 4. Fireup Server
+
+```sh
+python manager.py runserver
+``
+
+> [!NOTE]
+> You can then access the server from http://localhost:8000
