@@ -1,8 +1,8 @@
-# Admission Document Upload and Confirmation System
+# AI-Driven ChatBot and Optical Character Recognition System for enrollment in Learning Institutions
 
-This is a Django-based system that allows users to upload admission documents, extract data using OCR, and confirm the extracted information before saving it.
+This is a Django-based system that allows users to upload admission documents, extract data using OCR, and confirm the extracted information before saving it. It also has an interactive Natutal Language Processing chatbot based on fine-tuned Generative Pre-trained Transformer (GPT) for users to engage and learn more about the Competency-Based Curriculum (CBC)
 
-## Prerequisites
+## System Prerequisites
 
 - Python (version 3.7+)
 - Django (version 3.2+)
@@ -12,6 +12,11 @@ This is a Django-based system that allows users to upload admission documents, e
 
 ### 1. Clone the Repository
 
+```bash
+git clone https://github.com/Denisganga/chatbot
+```
 
+```bash
+cd chatbot
+```
 
-cd yourproject
