@@ -15,10 +15,11 @@ from django.contrib.auth.decorators import login_required
 from .models import ChatBot
 from django.http import HttpResponseRedirect, JsonResponse
 import google.generativeai as genai
+from django.conf import settings
 
 # Create your views here.
 # add here to your generated API key
-genai.configure(api_key="AIzaSyCm9GYI3_F1K-VtI3BQ1b6shzvteIG02ys")
+genai.configure(api_key=settings.CONFIG.genai_api_key)
 
 @login_required
 def ask_question(request):

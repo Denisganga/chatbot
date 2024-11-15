@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from pydantic import BaseModel, field_validator
+import typing as t
+from dotenv import dotenv_values
+import re
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -116,6 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+
 import os
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -125,11 +130,49 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+class Config(BaseModel):
+    """Implements a granular way of taking email variables and genai-api-key from environment"""
+    email_backend: t.Optional[str] = 'django.core.mail.backends.smtp.EmailBackend'
+    email_host:t.Optional[str] = 'smtp.gmail.com'
+    email_port: t.Optional[int] = 587
+    email_use_tls: t.Optional[bool] = True
+    email_host_user: str
+    email_host_password: str
+    genai_api_key:str
+
+    @field_validator('email_host')
+    def validate_email_host(value) -> str:
+        if not re.match(r"^[\w_-]+\.[\w_-]+\.\w{2,7}$", value):
+            raise ValueError(
+                f"Invalide email_host - {value} "
+            )
+        return value
+
+    @field_validator('email_host_user')
+    def validate_email_host_user(value) -> str:
+        if not re.match(r'^[\w_-]+@[\w_-]+\.\w{2,7}$', value):
+            raise ValueError(
+                f"Invalid email_host_user - {value}"
+            )
+        return value
+    
+    @field_validator('genai_api_key')
+    def validate_genai_api_key(value) -> str:
+        if not re.match(r"[\w_-]{35,45}", value):
+            raise ValueError(
+                f'Invalid genai_api_key - {value}'
+            )
+        return value
 
 
-EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST ='smtp.gmail.com'
-EMAIL_PORT =587
-EMAIL_USE_TLS =True
-EMAIL_HOST_USER ='denisnganga16@gmail.com'
-EMAIL_HOST_PASSWORD = 'jbxw hpgo rvje jnkt'
+dotenv_path = '.env'
+
+CONFIG = Config(**dotenv_values(dotenv_path))
+"""Configurations loaded from .env file"""
+
+EMAIL_BACKEND = CONFIG.email_backend
+EMAIL_HOST = CONFIG.email_host
+EMAIL_PORT = CONFIG.email_port
+EMAIL_USE_TLS = CONFIG.email_use_tls
+EMAIL_HOST_USER = CONFIG.email_host_user
+EMAIL_HOST_PASSWORD = CONFIG.email_host_password
